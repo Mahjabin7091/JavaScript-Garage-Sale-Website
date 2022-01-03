@@ -1,0 +1,201 @@
+<!--Author by: Mahjabin Sajadi-->
+<html>
+
+	<head>
+		<title>Garage Sale /Dishes</title>
+        <script src="Assign_2.js" ></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> <!--Valid or invalid user name entered-->
+
+        <style>
+              /*********************image setting***********************/
+                 #small {  
+	            height: 130px;
+    	        width: 180px; 
+               
+                }
+                 /***********column of page*************/
+                 article {
+                    width: 1600px;  /*754*/
+                    padding: 25px;  /*25*/
+                    -moz-column-count: 3;
+                    -webkit-column-count: 3;
+                    column-count: 3;
+                    -moz-column-gap: 35px;
+                    -webkit-column-gap: 35px;
+                    column-gap: 35px;
+                    -moz-column-rule: 2px solid hsl(246, 79%, 40%);
+                    -webkit-column-rule: 2px solid hsl(246, 79%, 40%);
+                    column-rule: 2px solid hsl(246, 79%, 40%);
+                    
+		        }
+                .box {
+                        border: 5px solid rebeccapurple;
+                        background-color: lightgray;
+                        padding: 40px;
+                        margin: 40px;
+                        width: 300px;
+                        height: 400px;
+                    }
+                main h1
+                {
+                    font-size: 200%;
+	                color: #004e97;
+                }
+
+                /*********************Reciept Style**************/
+              * {
+                    font-size: 12px;
+                    font-family: 'Times New Roman';
+                    
+                }
+                body{
+                    text-align: center;
+                    position: center;
+                }
+
+                td,
+                th,
+                tr,
+                table {
+                    border-top: 1px solid black;
+                    border-collapse: collapse;
+                    text-align: center;
+                }
+
+                td.description,
+                th.description {
+                    width: 75px;
+                    max-width: 75px;
+                }
+
+                td.quantity,
+                th.quantity {
+                    width: 40px;
+                    max-width: 40px;
+                    word-break: break-all;
+                }
+
+                td.price,
+                th.price {
+                    width: 40px;
+                    max-width: 40px;
+                    word-break: break-all;
+                }
+
+                .centered {
+                    text-align: center;
+                    align-content: center;
+                }
+
+                .Reciept {
+                    width: 155px;
+                    max-width: 155px;
+                }
+
+                img {
+                    max-width: inherit;
+                    width: inherit;
+                }
+
+                @media print {
+                    .hidden-print,
+                    .hidden-print * {
+                        display: none !important;
+                    }
+                }
+
+        </style>
+
+	</head>
+
+	<body>
+        <main>
+            <h1> Garage Dishes Sale </h1>
+           <h1> Please enter your information on the form Garage Sale </h1>
+         <!--images Setting-->
+        <fieldset class="box">
+            <legend>Shopping Items</legend>
+                <article>
+                    <p id=outputSpan>
+                    <img  id="small" src="1.jpg" name = "item A" alt="image" title= "itemA Price: $10"></br>&nbsp;&nbsp;
+                    <input type="button" onclick="checkTotalPrice(b.value,10,'itemA','dataTable','summ','Donate');" value="Add to Bascket" /></br>&nbsp;&nbsp;
+                    b: <input type="number" name="b" id="b"><br>
+                    <br/>
+
+                    <img  id="small" src="2.jpg" alt="image" title= "itemB Price: $20"></br>&nbsp;&nbsp;
+                    <input type="button" onclick="checkTotalPrice(c.value,20,'itemB','dataTable','summ','Donate');" value="Add to Bascket"/></br>&nbsp;&nbsp;
+                    c: <input type="number" name="c" id="c"><br>
+                    <br/>
+                    </p>
+                    <p id=outputSpan>
+                    <img  id="small" src="3.png" alt="image" title= "itemC Price: $35"></br>&nbsp;&nbsp;
+                    <input type="button" onclick="checkTotalPrice(d.value,35,'itemC','dataTable','summ','Donate');" value="Add to Bascket" /></br>&nbsp;&nbsp;
+                    d: <input type="number" name="d" id="d"><br>
+                    <br/>
+                
+                    <img  id="small" src="4.jpg" alt="image" title= "itemD Price: $15"></br>&nbsp;&nbsp;
+                    <input type="button" onclick="checkTotalPrice(e.value,15,'itemD','dataTable','summ','Donate');" value="Add to Bascket" /></br>&nbsp;&nbsp;
+                    e: <input type="number" name="e" id="e"><br>
+                    <br/>
+                    </p>
+                    <p id=outputSpan>
+                    <img  id="small" src="5.jpg" alt="image" title= "itemE Price: $50.85"></br>&nbsp;&nbsp;
+                    <input type="button" onclick="checkTotalPrice(f.value,50.85,'itemE','dataTable','summ','Donate');" value="Add to Bascket" /></br>&nbsp;&nbsp;
+                    f: <input type="number" name="f" id="f"><br>
+                    <br/>
+
+                    <img  id="small" src="6.jpg" alt="image" title= "itemF Price: $18.95"></br>&nbsp;&nbsp;
+                    <input type="button" onclick="checkTotalPrice(g.value,18.95,'itemF','dataTable','summ','Donate');" value="Add to Bascket" /></br>&nbsp;&nbsp;
+                    g: <input type="number" name="g" id="g"><br>
+                    <br/>
+                    </p>
+
+                </article>  
+            </fieldset>      
+
+           <!-- Reciept setting -->
+           
+            <table id="dataTable" width="350px" borde="1" align="center">
+            <thead>
+                <tr>
+                    <td><INPUT type="checkbox" name="chk"/>Selection</td>
+                    <th class="description">Description</th>
+                    <th class="price">price</th>
+                    <th class="quantity">Q.</th>
+                    <th class="total">total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><INPUT  type="checkbox" name="chk"/></td>  <!-- For delete the row-->
+                    <td><INPUT id="item" type="text" class="item" name="itemName"size=2/></td>
+                    <td><INPUT id="price" type="text" class="price" name="price" size=2/></td>
+                    <td><INPUT id="quantity" type="text" class="quantity" name="quantity" size=2/></td>
+                    <td><INPUT id="total" type="text" class="total" name="total" size=2/></td>
+ 
+                </tr>
+
+            </tbody>
+         </table>
+        
+        <p>
+      
+        Sum:    <INPUT type="text" class="summ" id="summ" size=2  /></br>&nbsp;&nbsp;
+
+        Donate: <INPUT type="text" class="Donate" id="Donate" size=2  /></br>&nbsp;&nbsp;
+         <input type="button" value="Delete Row" onclick="deleteRow('dataTable');" /></br>&nbsp;&nbsp;</p>
+
+         <p class="centered">Thanks for your purchase!
+            <br>Mahjabin Sajadi</p>
+          
+        <h2> If you want purchase from our website, please select Paymant to proceed to the bank portal</h2>
+        <!--Counting to go to the bank form-->
+           <form action="bankForm.html">
+              <input type="submit" value="Paymant" onclick="copyvalues();"/>
+           </form>
+         </main>        
+    </body>
+
+</html>

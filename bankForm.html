@@ -1,0 +1,209 @@
+<!--Author by: Mahjabin Sajadi-->
+<html>
+
+	<head>
+		<title>Garage Sale /Dishes</title>
+		<script src="Assign_2.js" ></script>
+        <script src="Assign_2.html" ></script>
+        <script src="reciept.html" ></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>  <!--Credit card input-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!--Credit card output-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> <!--Valid or invalid user name entered-->
+        <style>
+              /*********************image setting***********************/
+                 #small {  
+	            height: 100px;
+    	        width: 150px; 
+               
+                }
+           
+                @media print {
+                    .hidden-print,
+                    .hidden-print * {
+                        display: none !important;
+                    }
+                }
+                .required {  /* Marker for required fields */
+                        color: red;
+                    }
+                    
+                    .errorMsg {  /* for error messages */
+                         color: red;
+                    }
+                    
+                    .errorBox {  /* for the error input text fields */
+                         border: 2px solid red;
+                    }
+
+
+                /*********************Reciept Style**************/
+                * {
+                    font-size: 12px;
+                    font-family: 'Times New Roman';
+                    
+                }
+                body{
+                    text-align: center;
+                    position: center;
+                }
+
+                td,
+                th,
+                tr,
+                table {
+                    border-top: 1px solid black;
+                    border-collapse: collapse;
+                    text-align: center;
+                }
+
+                td.description,
+                th.description {
+                    width: 75px;
+                    max-width: 75px;
+                }
+
+                td.quantity,
+                th.quantity {
+                    width: 40px;
+                    max-width: 40px;
+                    word-break: break-all;
+                }
+
+                td.price,
+                th.price {
+                    width: 40px;
+                    max-width: 40px;
+                    word-break: break-all;
+                }
+
+                .centered {
+                    text-align: center;
+                    align-content: center;
+                }
+
+                .Reciept {
+                    width: 155px;
+                    max-width: 155px;
+                }
+
+                img {
+                    max-width: inherit;
+                    width: inherit;
+                }
+        </style>
+
+	</head>
+
+	<body>
+      <!--Form Setting / enctype="multipart/form-data"-->
+
+      <form  action="/formdata.php"  method="get" name="myForm">
+        <fieldset>
+           <legend>Form Details</legend>  
+           <div>
+            <td><label  for="txtName">Name<span class="required">*</span>
+               <input id="userName" type="text" name="name"  required  onkeyup= "regExUserName();" aria-required="true" aria-describedby="name-format"/></br>
+               
+            </label></td>
+               </div>
+               <div>
+                <td><label for="txtName">Email<span class="required">*</span></label></td>
+                   <input id="userEmail" type="text" name="email" required onkeyup="regExemail();" aria-required="true"/></br>
+                   </div>
+
+           <div>
+               <label>Credit Card Number: </label>
+               <input id="cc_number" name="credit" type="text" required maxlength="16" autocomplete="off"  onkeyup="addHyphen(this);" placeholder="•••• •••• •••• ••••"/></br>                             
+            </div>
+           <div>
+               <label>CVC: </label>
+               <input id="cc-cvc" name="cvc"type="text" required maxlength="3" autocomplete="off" value=""/></br>
+           </div>
+           <div>
+               <label>Expiry Date: </label>
+               <select id="cc-exp-month">
+                   <option value="01">Jan</option>
+                   <option value="02">Feb</option>
+                   <option value="03">Mar</option>
+                   <option value="04">Apr</option>
+                   <option value="05">May</option>
+                   <option value="06">Jun</option>
+                   <option value="07">Jul</option>
+                   <option value="08">Aug</option>
+                   <option value="09">Sep</option>
+                   <option value="10">Oct</option>
+                   <option value="11">Nov</option>
+                   <option value="12">Dec</option>
+               </select>
+               <select id="cc-exp-year" >
+                   <option value="13">2013</option>
+                   <option value="14">2014</option>
+                   <option value="15">2015</option>
+                   <option value="16">2016</option>
+                   <option value="17">2017</option>
+                   <option value="18">2018</option>
+                   <option value="19">2019</option>
+                   <option value="20">2020</option>
+                   <option value="21">2021</option>
+                   <option value="22">2022</option>
+               </select>
+             <tr>
+            <td>&nbsp;</td>
+             <td><input type="button" value="Submit" id="btnSubmit" onclick="validateForm();" >&nbsp;
+                <input type="reset" value="Reset" id="btnReset" onClick="$('#confirm').html('');"></td>
+            </tr>
+         
+        </fieldset>
+       
+    </form>
+
+        <p id="confirm"> You entered </p>
+
+        Your total purchase price is:<span id="result"></span>
+      
+        <script>
+                document.getElementById("result").innerHTML=localStorage.getItem("textvalue");
+               
+            </script>
+              
+     <!-- Reciept setting -->
+ 
+        <table id="dataTable" width="350px" borde="1" align="center">
+            <thead>
+                <tr>
+                  <!--  <td><INPUT type="checkbox" name="chk"/>Selection</td>-->
+                    <th class="description">Description</th>
+                    <th class="price">price</th>
+                    <th class="quantity">Q.</th>
+                    <th class="total">total</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                   <!-- <td><INPUT type="checkbox1" name="chk1"/></td> --> <!-- For delete the row-->
+                    <td><INPUT id="item" type="text" class="item" name="itemName"size=2 /></td>
+                    <td><INPUT id="quantity" type="text" class="quantity" name="quantity" size=2/></td>
+                    <td><INPUT  id="price" type="text" class="price" name="price" size=2/></td>
+                    <td><INPUT id="total" type="text" class="total" name="total" size=2/></td>
+
+ 
+                </tr>
+
+            </tbody>
+         </table>
+
+        sum: <INPUT type="text" class="summ" id="summ" size=2 /></br>&nbsp;&nbsp;
+
+        Donate: <INPUT type="text" class="donate" id="donate" size=2 /></br>&nbsp;&nbsp;
+
+         <p class="centered">Thanks for your purchase!
+            <br>Mahjabin Sajadi</p>
+
+            <p>
+                <input type="button" value="Print this page" onClick="window.print()">
+               </p>
+    
+	</body>
+
+</html>
